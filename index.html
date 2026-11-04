@@ -1,0 +1,235 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ficha de producto</title><body><div id="industrial-site-v2" class="w-full" style="font-family:'Arial Narrow','Roboto Condensed',Arial,sans-serif;color:#111;background:#fff">
+<style>
+#industrial-site-v2{--orange:#fb531f;--blue:#00a6c1;--dark:#595959;font-size:14px;position:relative}
+#industrial-site-v2 *{box-sizing:border-box}
+#industrial-site-v2 button{cursor:pointer;font-family:inherit}
+#industrial-site-v2 .toolbar{background:#22272b;color:white;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;gap:10px;font:12px Arial,sans-serif}
+#industrial-site-v2 .toolbtn{border:0;background:white;color:#222;padding:10px 14px;border-radius:5px;font-weight:700}
+#industrial-site-v2 .wrap{max-width:1100px;width:90%;margin:auto}
+#industrial-site-v2 .topbar{height:80px;border-bottom:1px solid #ececec;background:white}
+#industrial-site-v2 .topinner{height:100%;display:flex;align-items:center;gap:44px}
+#industrial-site-v2 .logo{font-size:23px;font-weight:900;letter-spacing:-1px;white-space:nowrap}
+#industrial-site-v2 .logo i{font-style:normal;color:var(--orange);font-size:31px;vertical-align:middle}
+#industrial-site-v2 .toplinks{display:flex;gap:35px;font-size:14px}
+#industrial-site-v2 .topicons{margin-left:auto;display:flex;gap:24px;font-size:20px}
+#industrial-site-v2 .crumbs{display:flex;gap:10px;flex-wrap:wrap;align-items:center;color:#555;padding:17px 0;text-transform:uppercase;font-size:11px}
+#industrial-site-v2 .crumbs b{color:#111}
+#industrial-site-v2 .hero{display:grid;grid-template-columns:52% 48%;min-height:490px;padding-top:18px;padding-bottom:28px}
+#industrial-site-v2 .hero-media{min-width:0}
+#industrial-site-v2 .hero-photo{height:352px;display:flex;justify-content:center;align-items:center}
+#industrial-site-v2 .hero-photo img{max-width:93%;max-height:100%;object-fit:contain}
+#industrial-site-v2 .thumbs{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:16px}
+#industrial-site-v2 .thumb{height:53px;width:58px;background:white;border:1px solid #eee;display:flex;align-items:center;justify-content:center;padding:3px}
+#industrial-site-v2 .thumb.selected{border-bottom:2px solid var(--blue)}
+#industrial-site-v2 .thumb img{width:100%;height:100%;object-fit:contain}
+#industrial-site-v2 .round{width:31px;height:31px;border:0;border-radius:50%;background:#e8e8e8;font-size:20px}
+#industrial-site-v2 .hero-text{padding:20px 0 0 22px}
+#industrial-site-v2 h1{font-size:32px;line-height:1.25;letter-spacing:-.6px;margin:0 0 12px;font-weight:800}
+#industrial-site-v2 .article{font-size:12px;color:#777;margin-bottom:35px}
+#industrial-site-v2 .metric{display:grid;grid-template-columns:1fr auto;max-width:330px;margin-bottom:15px;gap:15px}
+#industrial-site-v2 .metric strong{font-weight:800}
+#industrial-site-v2 .orange{color:white;background:var(--orange);border:0;border-radius:50px;padding:13px 30px;font-size:14px;font-weight:800}
+#industrial-site-v2 .stickynav{position:sticky;top:0;z-index:5;background:white;border-bottom:1px solid #eee}
+#industrial-site-v2 .navrow{display:flex;gap:30px;align-items:center;min-height:59px;overflow-x:auto}
+#industrial-site-v2 .navrow button:not(.orange){border:0;background:none;color:#777;text-transform:uppercase;font-size:11px;font-weight:800;white-space:nowrap;height:59px;border-bottom:2px solid transparent;padding:0}
+#industrial-site-v2 .navrow button.on{color:#111;border-bottom-color:var(--blue)}
+#industrial-site-v2 .navrow .orange{margin-left:auto;flex-shrink:0;padding:10px 25px}
+#industrial-site-v2 .description{display:grid;grid-template-columns:1fr 1fr;min-height:455px}
+#industrial-site-v2 .desc-left{background:#efefef;display:flex;justify-content:flex-end;align-items:center}
+#industrial-site-v2 .desc-content{width:min(505px,95%);padding:35px 45px 35px 15px}
+#industrial-site-v2 .desc-content h2{font-size:25px;line-height:1.35;margin:0 0 16px;font-weight:800}
+#industrial-site-v2 .desc-content p{line-height:1.9;margin:0;white-space:pre-line;overflow-wrap:anywhere}
+#industrial-site-v2 .textbtn{border:0;background:none;color:inherit;font-size:14px;font-weight:800;padding:18px 0}
+#industrial-site-v2 .desc-right{display:flex;align-items:center;justify-content:center;background:white;min-width:0}
+#industrial-site-v2 .desc-right img{max-width:89%;max-height:410px;object-fit:contain}
+#industrial-site-v2 .specs{background:var(--dark);color:white;padding:78px 0 85px}
+#industrial-site-v2 .narrow{width:min(800px,88%);margin:auto}
+#industrial-site-v2 .specs h2{font-size:20px;margin:0 0 28px}
+#industrial-site-v2 .specs h3{font-size:16px;margin:37px 0 10px}
+#industrial-site-v2 .specrow{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:19px 0;border-bottom:1px solid #bbb}
+#industrial-site-v2 .specrow strong{font-weight:800}
+#industrial-site-v2 .specs .textbtn{color:white;margin-top:15px}
+#industrial-site-v2 .features{background:#eee;padding:80px 0 75px;overflow:hidden}
+#industrial-site-v2 .feature-kicker{font-size:11px;color:#666;margin:0 0 10px}
+#industrial-site-v2 .feature-track{display:flex;align-items:stretch;gap:20px;transform:translateX(-11%);width:123%}
+#industrial-site-v2 .feature-img{width:33.333%;height:320px;object-fit:cover;background:white}
+#industrial-site-v2 .feature-body{display:grid;grid-template-columns:65px 1fr auto;align-items:start;gap:15px;padding:20px 0 0;max-width:800px;margin:auto}
+#industrial-site-v2 .feature-count{font-size:12px;font-weight:700;padding-top:5px}
+#industrial-site-v2 .feature-body h3{font-size:19px;margin:0 0 12px}
+#industrial-site-v2 .feature-body p{font-size:14px;line-height:1.7;margin:0}
+#industrial-site-v2 .arrows{display:flex;gap:10px}
+#industrial-site-v2 .arrows button{font-size:25px;border:0;background:transparent;width:35px;height:33px}
+#industrial-site-v2 .accessories{background:#f7f7f7;padding:85px 0 90px}
+#industrial-site-v2 .leaf{color:#278a3c;font-size:48px;line-height:1}
+#industrial-site-v2 .accessories h2,#industrial-site-v2 .related h2{font-size:26px;margin:0 0 25px}
+#industrial-site-v2 .productcards{display:flex;gap:22px;overflow:hidden}
+#industrial-site-v2 .p-card{width:220px;min-width:220px;min-height:280px;background:white;border:1px solid #e7e7e7;padding:12px;display:flex;flex-direction:column}
+#industrial-site-v2 .p-card img{width:100%;height:175px;object-fit:contain}
+#industrial-site-v2 .p-card h3{font-size:17px;margin:12px 0 11px}
+#industrial-site-v2 .p-card p{font-size:12px;color:#888;margin:0 0 10px}
+#industrial-site-v2 .p-card .p-tag{font-size:10px;background:#666;color:white;font-weight:800;align-self:flex-start;padding:5px}
+#industrial-site-v2 .access-head{display:flex;justify-content:space-between;align-items:center;gap:20px}
+#industrial-site-v2 .service{padding:115px 0 100px;background:white}
+#industrial-site-v2 .smalltop{font-size:11px;color:#777;letter-spacing:.25px;text-transform:uppercase}
+#industrial-site-v2 .service h2,#industrial-site-v2 .parts h2{font-size:26px;margin:12px 0 30px}
+#industrial-site-v2 .service-row{display:flex;gap:24px;align-items:center}
+#industrial-site-v2 .service-row img{width:260px;height:180px;object-fit:cover}
+#industrial-site-v2 .service-row h3{font-size:24px;margin:0 0 15px}
+#industrial-site-v2 .service-row p{line-height:1.5}
+#industrial-site-v2 .service-row a{color:#111;font-weight:800;text-decoration:none}
+#industrial-site-v2 .parts{padding:55px 0 95px;background:white}
+#industrial-site-v2 .parts-layout{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:75px}
+#industrial-site-v2 .drawing-box{border:1px solid #e4e4e4;height:465px;display:flex;align-items:center;justify-content:center;position:relative;background:white}
+#industrial-site-v2 .drawing-box img{max-height:98%;max-width:95%;object-fit:contain}
+#industrial-site-v2 .drawing-tools{position:absolute;top:12px;left:8px;display:flex;flex-direction:column;gap:12px;z-index:1}
+#industrial-site-v2 .drawing-tools button{border:0;background:#f5f5f5;font-size:18px}
+#industrial-site-v2 .parts-scroll{height:465px;overflow-y:auto;scrollbar-width:thin;border-top:1px solid #eee}
+#industrial-site-v2 .part{display:flex;align-items:center;gap:16px;border-bottom:1px solid #ddd;padding:16px 6px;min-height:112px}
+#industrial-site-v2 .part img{width:74px;height:74px;object-fit:contain;flex-shrink:0}
+#industrial-site-v2 .part h3{font-size:15px;margin:0 0 12px;font-weight:800}
+#industrial-site-v2 .part p{font-size:12px;color:#777;margin:0}
+#industrial-site-v2 .pdfbtn{border:0;background:none;padding:20px 0;font-weight:800;font-size:14px;color:#111}
+#industrial-site-v2 .related{background:#f6f6f6;padding:85px 0 95px}
+#industrial-site-v2 .related .p-card{width:240px;min-width:240px}
+#industrial-site-v2 .bottomfoot{height:90px;background:#f6f6f6;border-top:1px solid #eee}
+#industrial-site-v2 .overlay{position:fixed;inset:0;background:#0006;z-index:20;display:none}
+#industrial-site-v2 .editor{position:fixed;right:0;top:0;height:100%;width:min(440px,95vw);z-index:21;background:white;color:#222;box-shadow:-8px 0 30px #0003;display:none;flex-direction:column;font:13px Arial,sans-serif}
+#industrial-site-v2 .editor.open{display:flex}
+#industrial-site-v2 .overlay.open{display:block}
+#industrial-site-v2 .editor-head{display:flex;justify-content:space-between;align-items:center;padding:17px 20px;border-bottom:1px solid #ddd;gap:8px}
+#industrial-site-v2 .editor-head h2{font-size:17px;margin:0}
+#industrial-site-v2 .editor-scroll{overflow:auto;padding:16px 20px 40px}
+#industrial-site-v2 .editor-scroll h3{font-size:14px;margin:24px 0 13px;padding-bottom:8px;border-bottom:1px solid #ddd}
+#industrial-site-v2 .editor label{display:block;font-size:12px;font-weight:700;margin:11px 0 5px}
+#industrial-site-v2 .editor input,#industrial-site-v2 .editor textarea{width:100%;border:1px solid #cbd0d5;border-radius:4px;padding:9px;font:13px Arial,sans-serif;color:#111;background:white}
+#industrial-site-v2 .editor textarea{resize:vertical;min-height:90px}
+#industrial-site-v2 .editor .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#industrial-site-v2 .editor .editcard{border:1px solid #ddd;border-radius:5px;padding:12px;margin:9px 0;background:#fafafa}
+#industrial-site-v2 .editor .add{width:100%;border:1px dashed #999;background:#f7f7f7;border-radius:4px;padding:12px;margin:9px 0}
+#industrial-site-v2 .editor .remove{border:0;background:none;color:#ae2f2f;padding:8px 0 0;font-size:12px}
+#industrial-site-v2 .editor .hint{color:#667;line-height:1.5;font-size:11px}
+#industrial-site-v2 .editor .close{border:1px solid #ddd;background:white;border-radius:4px;padding:9px}
+#industrial-site-v2 .placeholder{background:#f2f2f2;color:#999;display:flex;align-items:center;justify-content:center;font-size:12px;text-align:center}
+@media(max-width:700px){#industrial-site-v2 .topinner{gap:18px}#industrial-site-v2 .logo{font-size:17px}#industrial-site-v2 .logo i{font-size:21px}#industrial-site-v2 .toplinks{gap:10px;font-size:11px}#industrial-site-v2 .topicons{display:none}#industrial-site-v2 .hero{grid-template-columns:1fr}#industrial-site-v2 .hero-photo{height:270px}#industrial-site-v2 .hero-text{padding:25px 0}#industrial-site-v2 h1{font-size:26px}#industrial-site-v2 .description{grid-template-columns:1fr}#industrial-site-v2 .desc-left{justify-content:center}#industrial-site-v2 .desc-content{padding:40px 10px}#industrial-site-v2 .desc-right{height:300px}#industrial-site-v2 .feature-img{height:225px}#industrial-site-v2 .feature-body{grid-template-columns:48px 1fr auto;width:92%}#industrial-site-v2 .service-row{flex-direction:column;align-items:start}#industrial-site-v2 .service-row img{width:100%;max-width:340px}#industrial-site-v2 .parts-layout{grid-template-columns:1fr;gap:12px}#industrial-site-v2 .drawing-box{height:350px}#industrial-site-v2 .parts-scroll{height:330px}}
+</style><link rel="stylesheet" href="navigation.css">
+<div class="toolbar">
+ <span><strong>VISTA PREVIA</strong> · Ficha de producto completa</span>
+ <button class="toolbtn" id="v2-admin-open">⚙ Panel administrador</button>
+</div>
+<header class="topbar"><div class="wrap topinner">
+ <div class="logo"><i>✺</i>GARDENA</div>
+ <nav class="toplinks"><span>Productos</span><span>Descubra</span><span>Servicio y asistencia</span></nav>
+ <div class="topicons"><span>⌕</span><span>♙</span></div>
+</div></header>
+<div class="wrap">
+ <div class="crumbs" id="v2-crumbs"></div>
+ <section class="hero">
+  <div class="hero-media"><div class="hero-photo"><img id="v2-main-photo" alt="Producto"></div><div class="thumbs" id="v2-thumbs"></div></div>
+  <div class="hero-text">
+   <h1 id="v2-product-title"></h1>
+   <div class="article">Número de artículo <span id="v2-product-code"></span></div>
+   <div id="v2-metrics"></div>
+   <button class="orange" style="margin-top:18px">Buscar tienda</button>
+  </div>
+ </section>
+</div>
+<nav class="stickynav"><div class="wrap navrow">
+ <button data-go="v2-specs" class="on">Especificaciones</button>
+ <button data-go="v2-features">Características</button>
+ <button data-go="v2-service">Servicio y documentación del producto</button>
+ <button data-go="v2-parts">Piezas de repuesto</button>
+ <button class="orange">Buscar tienda</button>
+</div></nav>
+<section class="description" id="v2-specs">
+ <div class="desc-left"><div class="desc-content"><h2 id="v2-description-title"></h2><p id="v2-description"></p><button class="textbtn" id="v2-read-more" hidden>Leer más ﹀</button></div></div>
+ <div class="desc-right"><img id="v2-description-photo" alt="Vista de producto"></div>
+</section>
+<section class="specs">
+ <div class="narrow">
+  <h2>Especificaciones técnicas</h2>
+  <div class="specrow"><span>Referencia comercial</span><strong id="v2-commercial"></strong></div>
+  <div class="specrow"><span>GTIN-13/EAN</span><strong>4078500002486</strong></div>
+  <h3>Especificaciones</h3>
+  <div id="v2-specrows"></div>
+  <button class="textbtn" id="v2-expand" hidden>Expandir más ﹀</button>
+ </div>
+</section>
+<section class="features" id="v2-features">
+ <div class="wrap"><p class="feature-kicker">CARACTERÍSTICAS</p></div>
+ <div class="feature-track">
+  <img class="feature-img" id="v2-feature-prev" alt="Característica anterior">
+  <img class="feature-img" id="v2-feature-current" alt="Característica actual">
+  <img class="feature-img" id="v2-feature-next" alt="Característica siguiente">
+ </div>
+ <div class="feature-body"><div class="feature-count" id="v2-feature-count"></div><div><h3 id="v2-feature-title"></h3><p id="v2-feature-subtitle"></p></div><div class="arrows"><button id="v2-prev-feature" aria-label="Anterior">←</button><button id="v2-next-feature" aria-label="Siguiente">→</button></div></div>
+</section>
+<section class="accessories">
+ <div class="wrap">
+  <div class="leaf">❧</div>
+  <div class="access-head"><h2>Accesorios para el producto</h2><div class="arrows" id="v2-acc-arrows"><button id="v2-acc-prev">←</button><button id="v2-acc-next">→</button></div></div>
+  <div class="productcards" id="v2-acc-list"></div>
+ </div>
+</section>
+<section class="service" id="v2-service">
+ <div class="narrow">
+  <div class="smalltop">SERVICIO Y DOCUMENTACIÓN DEL PRODUCTO</div>
+  <h2>Estamos para ayudarle</h2>
+  <div class="service-row">
+   <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&amp;q=85" alt="Servicio de jardinería">
+   <div><h3>Todo lo que necesitas saber</h3><p>Todo lo que necesitas saber sobre los productos GARDENA lo tendrá en su carrito de compra.</p><a href="https://www.gardena.com/" target="_blank" rel="noopener noreferrer">Ir a las preguntas frecuentes ›</a></div>
+  </div>
+ </div>
+</section>
+<section class="parts" id="v2-parts">
+ <div class="narrow">
+  <div class="smalltop">PIEZAS DE REPUESTO</div>
+  <h2 id="v2-spare-title"></h2>
+  <div class="parts-layout">
+   <div class="drawing-box">
+    <div class="drawing-tools"><button id="v2-zoom-in" title="Ampliar">⊕</button><button id="v2-zoom-out" title="Reducir">⊖</button></div>
+    <img id="v2-drawing" alt="Dibujo técnico de despiece">
+   </div>
+   <div class="parts-scroll" id="v2-parts-list"></div>
+  </div>
+  <button class="pdfbtn" id="v2-download-pdf">▣ View / print technical drawing (PDF)</button>
+ </div>
+</section>
+<section class="related"><div class="wrap"><div class="leaf">❧</div><h2>Otros clientes también compraron/vieron</h2><div class="productcards"><article class="p-card"><div class="p-tag">MODELO OBSOLETO</div><img src="https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?w=350&amp;q=80" alt="Producto relacionado"><h3>Cortarramas EasyCut 680 A</h3><p>Número de artículo 12004-20</p></article></div></div></section>
+<footer class="bottomfoot"></footer>
+<div class="overlay" id="v2-overlay"></div>
+<aside class="editor" id="v2-editor">
+ <div class="editor-head"><h2>⚙ Administrador de producto</h2><button class="close" id="v2-editor-close">✕ Cerrar</button></div>
+ <div class="editor-scroll">
+  <p class="hint">Modificá los campos de contenido marcados en amarillo. La diagramación, colores y secciones permanecen fijos.</p>
+  <h3>01 · Identificación y galería</h3>
+  <label>Ruta de navegación, separada con &gt;</label><input data-main="crumbs">
+  <label>Nombre del producto</label><input data-main="title">
+  <label>Número de artículo / referencia comercial</label><input data-main="code">
+  <div class="two"><div><label>Característica principal 1</label><input data-main="metric1"></div><div><label>Valor 1</label><input data-main="value1"></div></div>
+  <div class="two"><div><label>Característica principal 2</label><input data-main="metric2"></div><div><label>Valor 2</label><input data-main="value2"></div></div>
+  <label>Imágenes de galería (reemplaza la galería)</label><input type="file" accept="image/*" multiple id="v2-gallery-upload">
+  <h3>02 · Descripción</h3>
+  <label>Título</label><input data-main="descTitle">
+  <label>Descripción</label><textarea data-main="desc"></textarea>
+  <label>Imagen descriptiva</label><input type="file" accept="image/*" id="v2-description-upload">
+  <h3>03 · Especificaciones</h3>
+  <div id="v2-edit-specs"></div>
+  <button class="add" data-add="specs">＋ Añadir especificación</button>
+  <h3>04 · Carrusel de características</h3>
+  <p class="hint">Cada imagen tendrá su propio título y subtítulo. El contador se actualiza automáticamente.</p>
+  <div id="v2-edit-features"></div>
+  <button class="add" data-add="features">＋ Añadir característica</button>
+  <h3>05 · Accesorios</h3>
+  <div id="v2-edit-accessories"></div>
+  <button class="add" data-add="accessories">＋ Añadir accesorio</button>
+  <h3>06 · Despiece técnico</h3>
+  <label>Imagen en blanco y negro del despiece</label><input type="file" accept="image/*" id="v2-drawing-upload">
+  <p class="hint">La imagen cargada será la que se mostrará en el visor y se exportará al PDF.</p>
+  <div id="v2-edit-parts"></div>
+  <button class="add" data-add="parts">＋ Añadir repuesto</button>
+  <h3>Controles</h3>
+  <button class="add" id="v2-reset">Restablecer datos de demostración</button>
+ </div>
+</aside>
+</div><script src="defaults.js"></script><script src="product.js"></script></body></html>
+

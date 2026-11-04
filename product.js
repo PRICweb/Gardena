@@ -1,0 +1,274 @@
+(() => {
+  const root = document.getElementById('industrial-site-v2');
+  const byId = name => document.getElementById('v2-' + name);
+  const key = 'pric-ficha-prototipo';
+  const seed = defaults();
+  const initial = {
+    ...seed, metric1: seed.stats[0][0], value1: seed.stats[0][1],
+    metric2: seed.stats[1][0], value2: seed.stats[1][1],
+    specs: seed.rows.map(([label, value]) => ({label, value})),
+    features: [], accessories: [], parts: [], drawing: ''
+  };
+  let data = structuredClone(initial);
+  try {
+    data = {...data, ...JSON.parse(localStorage.getItem(key))};
+  } catch (error) {
+    console.warn('No se pudieron cargar los datos locales', error);
+  }
+  let photoIndex = 0;
+  let featureIndex = 0;
+  let readMore = false;
+  let expanded = false;
+  let zoom = 1;
+  const fields = {
+    specs: {label: 'Nombre', value: 'Valor'},
+    features: {title: 'Título', subtitle: 'Subtítulo', image: 'Imagen'},
+    accessories: {title: 'Nombre', code: 'Número de artículo', image: 'Imagen'},
+    parts: {title: 'Nombre', code: 'Número de repuesto', image: 'Imagen'}
+  };
+  const el = (tag, content = '', className = '') => {
+    const node = document.createElement(tag);
+    node.textContent = content;
+    node.className = className;
+    return node;
+  };
+  const setText = (name, value) => { byId(name).textContent = value; };
+  function setImage(node, url) {
+    node.hidden = !url;
+    if (url) node.src = url;
+    else node.removeAttribute('src');
+  }
+  function render() {
+    setText('crumbs', data.crumbs.split('>').map(value => value.trim()).join(' › '));
+    setText('product-title', data.title);
+    setText('product-code', data.code);
+    setText('commercial', data.code);
+    setText('spare-title', data.title);
+    document.title = data.title || 'Ficha de producto';
+    byId('metrics').replaceChildren(...[1, 2].map(index => {
+      const row = el('div', '', 'metric');
+      row.append(el('span', data['metric' + index]), el('strong', data['value' + index]));
+      return row;
+    }));
+    setImage(byId('main-photo'), data.images[photoIndex]);
+    setImage(byId('description-photo'), data.detail || data.images[0]);
+    byId('thumbs').replaceChildren(...data.images.map((url, index) => {
+      const button = el('button', '', index === photoIndex ? 'thumb selected' : 'thumb');
+      const image = el('img');
+      image.alt = 'Vista del producto ' + (index + 1);
+      setImage(image, url);
+      button.append(image);
+      button.onclick = () => { photoIndex = index; render(); };
+      return button;
+    }));
+    setText('description-title', data.descTitle);
+    const long = data.desc.length > 350;
+    setText('description', long && !readMore ? data.desc.slice(0, 350).trimEnd() + '…' : data.desc);
+    byId('read-more').hidden = !long;
+    setText('read-more', readMore ? 'Leer menos ﹀' : 'Leer más ﹀');
+    byId('specrows').replaceChildren(...(expanded ? data.specs : data.specs.slice(0, 4)).map(item => {
+      const row = el('div', '', 'specrow');
+      row.append(el('span', item.label), el('strong', item.value));
+      return row;
+    }));
+    byId('expand').hidden = data.specs.length <= 4;
+    setText('expand', expanded ? 'Mostrar menos ﹀' : 'Expandir más ﹀');
+    const count = data.features.length;
+    featureIndex = count ? Math.min(featureIndex, count - 1) : 0;
+    const feature = data.features[featureIndex];
+    setText('feature-count', count ? (featureIndex + 1) + '/' + count : '0/0');
+    setText('feature-title', feature?.title || '');
+    setText('feature-subtitle', feature?.subtitle || '');
+    setImage(byId('feature-current'), feature?.image);
+    setImage(byId('feature-prev'), count > 1 && data.features[(featureIndex + count - 1) % count].image);
+    setImage(byId('feature-next'), count > 1 && data.features[(featureIndex + 1) % count].image);
+    byId('prev-feature').disabled = byId('next-feature').disabled = count < 2;
+    renderCards('acc-list', data.accessories);
+    renderCards('parts-list', data.parts);
+    setImage(byId('drawing'), data.drawing);
+    byId('download-pdf').disabled = !data.drawing;
+    requestAnimationFrame(updateNavigation);
+  }
+  function renderCards(name, items) {
+    const list = byId(name);
+    const left = list.scrollLeft;
+    const top = list.scrollTop;
+    list.replaceChildren(...items.map(item => {
+      const card = el('article', '', 'p-card');
+      const image = el('img');
+      image.alt = item.title;
+      setImage(image, item.image);
+      card.append(image, el('h3', item.title), el('p', item.code));
+      return card;
+    }));
+    list.scrollTo(left, top);
+    byId('acc-arrows').hidden = byId('acc-list').scrollWidth <= byId('acc-list').clientWidth;
+  }
+  function save() {
+    render();
+    try {
+      localStorage.setItem(key, JSON.stringify(data));
+      setText('local-status', 'Cambios guardados en este navegador.');
+    } catch {
+      setText('local-status', 'El navegador no pudo guardar los cambios. Probá con imágenes más pequeñas.');
+    }
+  }
+  function readImage(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+  function upload(input, apply) {
+    input.onchange = async () => {
+      if (!input.files.length) return;
+      try {
+        const urls = await Promise.all(Array.from(input.files, readImage));
+        apply(urls);
+        save();
+      } catch {
+        setText('local-status', 'No se pudo leer la imagen seleccionada.');
+      } finally {
+        input.value = '';
+      }
+    };
+  }
+  const editor = byId('editor');
+  const status = el('p', 'Guardado local de demostración.');
+  status.id = 'v2-local-status';
+  status.setAttribute('role', 'status');
+  editor.querySelector('.editor-scroll').prepend(status);
+  if (location.protocol === 'https:') {
+    const publish = el('button', 'Publicar con la cuenta de PRIC', 'add');
+    publish.disabled = true;
+    status.after(publish);
+    import('./cloud.js').then(async cloud => {
+      const published = await cloud.loadProduct();
+      if (published) {
+        data = {...structuredClone(initial), ...published};
+        photoIndex = featureIndex = 0;
+        if (editor.classList.contains('open')) editorFields();
+        render();
+      }
+      publish.disabled = false;
+      publish.onclick = async () => {
+        publish.disabled = true;
+        try {
+          await cloud.publishProduct(data);
+          setText('local-status', 'Ficha publicada.');
+        } catch (error) {
+          setText('local-status', error.message);
+        } finally {
+          publish.disabled = false;
+        }
+      };
+    }).catch(() => setText('local-status', 'No se pudo conectar con Firebase.'));
+  }
+  function editorFields() {
+    for (const input of editor.querySelectorAll('[data-main]')) {
+      const field = input.dataset.main;
+      input.value = data[field];
+      input.oninput = () => { data[field] = input.value; save(); };
+    }
+    for (const [group, schema] of Object.entries(fields)) {
+      byId('edit-' + group).replaceChildren(...data[group].map((item, index) => {
+        const card = el('div', '', 'editcard');
+        for (const [field, label] of Object.entries(schema)) {
+          const wrapper = el('label', label);
+          const input = el('input');
+          if (field === 'image') {
+            input.type = 'file';
+            input.accept = 'image/*';
+            upload(input, ([url]) => { item.image = url; });
+          } else {
+            input.value = item[field];
+            input.oninput = () => { item[field] = input.value; save(); };
+          }
+          wrapper.append(input);
+          card.append(wrapper);
+        }
+        const remove = el('button', 'Quitar', 'remove');
+        remove.onclick = () => { data[group].splice(index, 1); editorFields(); save(); };
+        card.append(remove);
+        return card;
+      }));
+    }
+  }
+  for (const button of editor.querySelectorAll('[data-add]')) {
+    button.onclick = () => {
+      const group = button.dataset.add;
+      data[group].push(Object.fromEntries(Object.keys(fields[group]).map(field => [field, ''])));
+      editorFields();
+      save();
+    };
+  }
+  function showEditor(open) {
+    editor.classList.toggle('open', open);
+    byId('overlay').classList.toggle('open', open);
+    if (open) editorFields();
+    byId(open ? 'editor-close' : 'admin-open').focus();
+  }
+  byId('admin-open').onclick = () => showEditor(true);
+  byId('editor-close').onclick = byId('overlay').onclick = () => showEditor(false);
+  upload(byId('gallery-upload'), urls => { data.images = urls; photoIndex = 0; });
+  upload(byId('description-upload'), ([url]) => { data.detail = url; });
+  upload(byId('drawing-upload'), ([url]) => { data.drawing = url; });
+  byId('reset').onclick = () => {
+    if (!confirm('¿Restablecer los datos de demostración?')) return;
+    data = structuredClone(initial);
+    photoIndex = featureIndex = 0;
+    editorFields();
+    save();
+  };
+  byId('read-more').onclick = () => { readMore = !readMore; render(); };
+  byId('expand').onclick = () => { expanded = !expanded; render(); };
+  for (const [name, step] of [['prev', -1], ['next', 1]]) {
+    byId(name + '-feature').onclick = () => {
+      const count = data.features.length;
+      featureIndex = (featureIndex + count + step) % count;
+      render();
+    };
+    byId('acc-' + name).onclick = () => byId('acc-list').scrollBy({left: step * 242, behavior: 'smooth'});
+  }
+  for (const [name, step] of [['in', 0.25], ['out', -0.25]]) {
+    byId('zoom-' + name).onclick = () => {
+      zoom = Math.max(1, Math.min(3, zoom + step));
+      byId('drawing').style.transform = 'scale(' + zoom + ')';
+    };
+  }
+  byId('download-pdf').textContent = 'Descargar imagen del despiece';
+  byId('download-pdf').onclick = () => {
+    const link = el('a');
+    link.href = data.drawing;
+    link.download = 'despiece';
+    link.click();
+  };
+  const nav = root.querySelector('.stickynav');
+  const tabs = Array.from(nav.querySelectorAll('[data-go]'));
+  const sections = tabs.map(tab => document.getElementById(tab.dataset.go));
+  function updateNavigation() {
+    let active = 0;
+    for (const [index, section] of sections.entries()) {
+      if (section.getBoundingClientRect().top <= nav.offsetHeight + 2) active = index;
+    }
+    tabs.forEach((tab, index) => {
+      tab.classList.toggle('on', index === active);
+      if (index === active) tab.setAttribute('aria-current', 'location');
+      else tab.removeAttribute('aria-current');
+    });
+  }
+  tabs.forEach((tab, index) => {
+    tab.onclick = () => window.scrollTo({
+      top: window.scrollY + sections[index].getBoundingClientRect().top - nav.offsetHeight,
+      behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'
+    });
+  });
+  window.addEventListener('scroll', updateNavigation, {passive: true});
+  window.addEventListener('resize', () => {
+    updateNavigation();
+    byId('acc-arrows').hidden = byId('acc-list').scrollWidth <= byId('acc-list').clientWidth;
+  });
+  render();
+})();
