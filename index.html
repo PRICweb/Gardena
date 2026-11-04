@@ -160,7 +160,7 @@
 </section>
 <section class="accessories">
  <div class="wrap">
-  <div class="leaf">❧</div>
+  <div class="leaf" aria-hidden="true"></div>
   <div class="access-head"><h2>Accesorios para el producto</h2><div class="arrows" id="v2-acc-arrows"><button id="v2-acc-prev">←</button><button id="v2-acc-next">→</button></div></div>
   <div class="productcards" id="v2-acc-list"></div>
  </div>
@@ -170,7 +170,7 @@
   <div class="smalltop">SERVICIO Y DOCUMENTACIÓN DEL PRODUCTO</div>
   <h2>Estamos para ayudarle</h2>
   <div class="service-row">
-   <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&amp;q=85" alt="Servicio de jardinería">
+   <div class="service-photo" role="img" aria-label="Persona con una tableta en el jardín"></div>
    <div><h3>Todo lo que necesitas saber</h3><p>Todo lo que necesitas saber sobre los productos GARDENA lo tendrá en su carrito de compra.</p><a href="https://www.gardena.com/" target="_blank" rel="noopener noreferrer">Ir a las preguntas frecuentes ›</a></div>
   </div>
  </div>
@@ -186,12 +186,13 @@
    </div>
    <div class="parts-scroll" id="v2-parts-list"></div>
   </div>
-  <button class="pdfbtn" id="v2-download-pdf">▣ View / print technical drawing (PDF)</button>
+  <button class="pdfbtn" id="v2-download-pdf"><span class="pdf-icon" aria-hidden="true">PDF</span> View / print technical drawing</button>
  </div>
 </section>
-<section class="related"><div class="wrap"><div class="leaf">❧</div><h2>Otros clientes también compraron/vieron</h2><div class="productcards"><article class="p-card"><div class="p-tag">MODELO OBSOLETO</div><img src="https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?w=350&amp;q=80" alt="Producto relacionado"><h3>Cortarramas EasyCut 680 A</h3><p>Número de artículo 12004-20</p></article></div></div></section>
+<section class="related"><div class="wrap"><div class="leaf" aria-hidden="true"></div><h2>Otros clientes también compraron/vieron</h2><div class="productcards"><article class="p-card"><div class="p-tag">MODELO OBSOLETO</div><div class="related-photo" role="img" aria-label="Cortarramas EasyCut 680 A"></div><h3>Cortarramas EasyCut 680 A</h3><p>Número de artículo 12004-20</p></article></div></div></section>
 <footer class="bottomfoot"></footer>
 <div class="overlay" id="v2-overlay"></div>
+<dialog id="v2-admin-login"><form><label for="v2-admin-password">Contraseña del administrador</label><input id="v2-admin-password" type="password" autocomplete="current-password" required><p id="v2-admin-error" role="status"></p><button type="submit">Ingresar</button> <button type="button" id="v2-login-cancel">Cancelar</button></form></dialog>
 <aside class="editor" id="v2-editor">
  <div class="editor-head"><h2>⚙ Administrador de producto</h2><button class="close" id="v2-editor-close">✕ Cerrar</button></div>
  <div class="editor-scroll">

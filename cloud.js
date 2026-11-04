@@ -1,5 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
+import { getAuth, inMemoryPersistence, setPersistence, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
 import { getFirestore, doc, getDocFromServer, runTransaction } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
 import { firebaseConfig } from './firebase-config.js';
 
@@ -7,6 +7,16 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const product = doc(getFirestore(app), 'publicacion', 'ficha');
 let baseline;
+const adminEmail = 'pric.administracion@gmail.com';
+
+export async function unlockAdmin(password) {
+  await setPersistence(auth, inMemoryPersistence);
+  const {user} = await signInWithEmailAndPassword(auth, adminEmail, password);
+  if (!user.emailVerified) {
+    await signOut(auth);
+    throw new Error('La cuenta de administrador todavía requiere verificación.');
+  }
+}
 
 export async function loadProduct() {
   const snapshot = await getDocFromServer(product);
@@ -20,11 +30,7 @@ export async function publishProduct(data) {
   if (new TextEncoder().encode(content).length >= 900000) {
     throw new Error('La ficha supera el límite de 900 KB. Reducí el tamaño de las imágenes.');
   }
-  const user = auth.currentUser || (await signInWithPopup(auth, new GoogleAuthProvider())).user;
-  if (user.email !== 'pric.administracion@gmail.com') {
-    await auth.signOut();
-    throw new Error('Ingresá con la cuenta de PRIC.');
-  }
+  if (auth.currentUser?.email !== adminEmail) throw new Error('Ingresá con la contraseña de administrador.');
   await runTransaction(getFirestore(app), async transaction => {
     const current = await transaction.get(product);
     if ((current.data()?.contenido ?? null) !== baseline) {

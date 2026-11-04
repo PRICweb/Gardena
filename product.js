@@ -141,7 +141,7 @@
   status.setAttribute('role', 'status');
   editor.querySelector('.editor-scroll').prepend(status);
   if (location.protocol === 'https:') {
-    const publish = el('button', 'Publicar con la cuenta de PRIC', 'add');
+    const publish = el('button', 'Publicar cambios', 'add');
     publish.disabled = true;
     status.after(publish);
     import('./cloud.js').then(async cloud => {
@@ -210,7 +210,37 @@
     if (open) editorFields();
     byId(open ? 'editor-close' : 'admin-open').focus();
   }
-  byId('admin-open').onclick = () => showEditor(true);
+  const login = byId('admin-login');
+  const password = byId('admin-password');
+  const loginForm = login.querySelector('form');
+  const loginButton = loginForm.querySelector('[type="submit"]');
+  byId('admin-open').onclick = () => {
+    login.showModal();
+    password.focus();
+  };
+  byId('login-cancel').onclick = () => login.close();
+  login.addEventListener('close', () => {
+    password.value = '';
+    setText('admin-error', '');
+  });
+  loginForm.onsubmit = async event => {
+    event.preventDefault();
+    loginButton.disabled = true;
+    setText('admin-error', 'Verificando contraseña…');
+    try {
+      const cloud = await import('./cloud.js');
+      await cloud.unlockAdmin(password.value);
+      if (login.open) {
+        login.close();
+        showEditor(true);
+      }
+    } catch (error) {
+      const rejected = ['auth/invalid-credential', 'auth/wrong-password'].includes(error.code);
+      setText('admin-error', rejected ? 'Contraseña incorrecta.' : 'El acceso de administrador todavía no está disponible.');
+    } finally {
+      loginButton.disabled = false;
+    }
+  };
   byId('editor-close').onclick = byId('overlay').onclick = () => showEditor(false);
   upload(byId('gallery-upload'), urls => { data.images = urls; photoIndex = 0; });
   upload(byId('description-upload'), ([url]) => { data.detail = url; });
@@ -238,7 +268,6 @@
       byId('drawing').style.transform = 'scale(' + zoom + ')';
     };
   }
-  byId('download-pdf').textContent = 'Descargar imagen del despiece';
   byId('download-pdf').onclick = () => {
     const link = el('a');
     link.href = data.drawing;

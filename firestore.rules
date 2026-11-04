@@ -6,7 +6,7 @@ service cloud.firestore {
       allow create, update: if request.auth != null
         && request.auth.token.email == 'pric.administracion@gmail.com'
         && request.auth.token.email_verified == true
-        && request.auth.token.firebase.sign_in_provider == 'google.com'
+        && request.auth.token.firebase.sign_in_provider in ['google.com', 'password']
         && request.resource.data.keys().hasOnly(['contenido'])
         && request.resource.data.contenido is string
         && request.resource.data.contenido.size() < 900000;

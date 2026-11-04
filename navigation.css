@@ -55,3 +55,72 @@ body { margin: 0; }
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+#industrial-site-v2 .accessories,
+#industrial-site-v2 .related {
+  position: relative;
+  background: #f5f5f5;
+  padding: 123px 0 95px;
+}
+#industrial-site-v2 .accessories .wrap,
+#industrial-site-v2 .related .wrap {
+  width: calc(100% - clamp(32px, 7.6vw, 140px));
+  max-width: none;
+}
+#industrial-site-v2 .leaf {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 159px;
+  height: 185px;
+  background: url("referencia-hojas.png") no-repeat 0 -22px;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+#industrial-site-v2 .accessories h2,
+#industrial-site-v2 .related h2 {
+  position: relative;
+  margin: 0 0 34px clamp(45px, 4.75vw, 88px);
+  font-size: 32px;
+}
+#industrial-site-v2 .accessories .p-card,
+#industrial-site-v2 .related .p-card {
+  position: relative;
+  width: 264px;
+  min-width: 264px;
+  min-height: 300px;
+  padding: 16px;
+}
+#industrial-site-v2 .accessories .p-card { min-height: 326px; }
+#industrial-site-v2 .accessories .p-card img { height: 200px; }
+#industrial-site-v2 .related-photo {
+  width: 100px;
+  height: 175px;
+  margin: 0 auto 24px;
+  background: url("referencia-relacionados.png") no-repeat -150px -448px;
+}
+#industrial-site-v2 .related .p-tag { position: absolute; top: 16px; left: 0; z-index: 1; font-size: 13px; }
+#industrial-site-v2 .service { padding: 96px 0; }
+#industrial-site-v2 .service .narrow { width: min(992px, 88%); }
+#industrial-site-v2 .service .smalltop { font-size: 14px; }
+#industrial-site-v2 .service h2,
+#industrial-site-v2 .service-row h3 { font-size: 32px; }
+#industrial-site-v2 .service h2 { margin: 8px 0 25px; }
+#industrial-site-v2 .service-row { font-size: 18px; }
+#industrial-site-v2 .service-photo {
+  flex: 0 0 auto;
+  width: min(314px, 100%);
+  height: 210px;
+  background: url("referencia-servicio.png") no-repeat -120px -135px;
+}
+#industrial-site-v2 .pdfbtn { font-size: 18px; }
+#industrial-site-v2 .pdf-icon {
+  display: inline-block;
+  border: 1px solid currentColor;
+  border-radius: 1px;
+  padding: 3px 1px;
+  font-size: 7px;
+  vertical-align: middle;
+}
+#v2-admin-login { border: 1px solid #ddd; padding: 24px; max-width: 90vw; }
+#v2-admin-login::backdrop { background: rgb(0 0 0 / 45%); }
+#v2-admin-login input { display: block; margin-top: 8px; padding: 8px; width: 100%; }
