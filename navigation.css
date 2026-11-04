@@ -58,7 +58,7 @@ body { margin: 0; }
 #industrial-site-v2 .accessories,
 #industrial-site-v2 .related {
   position: relative;
-  background: #f5f5f5;
+  background: #f6f6f6;
   padding: 123px 0 95px;
 }
 #industrial-site-v2 .accessories .wrap,
@@ -73,7 +73,6 @@ body { margin: 0; }
   width: 159px;
   height: 185px;
   background: url("referencia-hojas.png") no-repeat 0 -22px;
-  mix-blend-mode: multiply;
   pointer-events: none;
 }
 #industrial-site-v2 .accessories h2,
