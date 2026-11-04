@@ -246,9 +246,13 @@
     link.click();
   };
   const nav = root.querySelector('.stickynav');
+  const store = nav.querySelector('.nav-store');
   const tabs = Array.from(nav.querySelectorAll('[data-go]'));
   const sections = tabs.map(tab => document.getElementById(tab.dataset.go));
   function updateNavigation() {
+    const stuck = nav.getBoundingClientRect().top <= 0;
+    nav.classList.toggle('is-stuck', stuck);
+    store.hidden = !stuck;
     let active = 0;
     for (const [index, section] of sections.entries()) {
       if (section.getBoundingClientRect().top <= nav.offsetHeight + 2) active = index;

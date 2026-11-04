@@ -22,3 +22,36 @@ body { margin: 0; }
   #industrial-site-v2 .navrow button:not(.orange) { min-height: 32px; }
   #industrial-site-v2 .navrow .orange { grid-column: 1 / -1; margin: 0 auto 4px; }
 }
+#industrial-site-v2 .topbar { height: 100px; border-top: 1px solid #181818; }
+#industrial-site-v2 .topinner { max-width: 1194px; gap: 51px; }
+#industrial-site-v2 .logo { display: flex; align-items: center; gap: 2px; flex: 0 0 auto; font: 900 23px Arial, sans-serif; letter-spacing: -1.1px; }
+#industrial-site-v2 .toplinks { gap: 48px; font: 18px "Arial Narrow", "Liberation Sans Narrow", Arial, sans-serif; }
+#industrial-site-v2 .topicons { display: flex; align-items: center; gap: 64px; }
+#industrial-site-v2 .topicons svg { display: block; }
+#industrial-site-v2 .topicons button { border: 0; background: transparent; color: inherit; padding: 0; }
+@media (max-width: 850px) {
+  #industrial-site-v2 .topinner, #industrial-site-v2 .toplinks, #industrial-site-v2 .topicons { gap: clamp(8px, 2.5vw, 24px); }
+  #industrial-site-v2 .toplinks { font-size: 14px; }
+}
+@media (max-width: 480px) {
+  #industrial-site-v2 .topbar { height: auto; }
+  #industrial-site-v2 .topinner { flex-wrap: wrap; padding-block: 12px; }
+  #industrial-site-v2 .toplinks { order: 1; width: 100%; }
+}
+#industrial-site-v2 .logo img { display: block; object-fit: contain; }
+#industrial-site-v2 .account-icon {
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-position: -37px -12px;
+}
+#industrial-site-v2 .navrow { grid-template-columns: repeat(4, minmax(0, auto)); }
+#industrial-site-v2 .stickynav.is-stuck .navrow {
+  grid-template-columns: repeat(4, minmax(0, auto)) minmax(0, max-content);
+}
+@media (max-width: 520px) {
+  #industrial-site-v2 .navrow, #industrial-site-v2 .stickynav.is-stuck .navrow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
