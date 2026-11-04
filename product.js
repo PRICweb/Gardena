@@ -214,6 +214,10 @@
   const password = byId('admin-password');
   const loginForm = login.querySelector('form');
   const loginButton = loginForm.querySelector('[type="submit"]');
+  const verifyButton = el('button', 'Enviar correo de verificación');
+  verifyButton.type = 'submit';
+  verifyButton.hidden = true;
+  loginButton.after(verifyButton);
   byId('admin-open').onclick = () => {
     login.showModal();
     password.focus();
@@ -221,15 +225,24 @@
   byId('login-cancel').onclick = () => login.close();
   login.addEventListener('close', () => {
     password.value = '';
+    verifyButton.hidden = true;
     setText('admin-error', '');
   });
   loginForm.onsubmit = async event => {
     event.preventDefault();
     loginButton.disabled = true;
+    verifyButton.disabled = true;
     setText('admin-error', 'Verificando contraseña…');
     try {
       const cloud = await import('./cloud.js');
-      await cloud.unlockAdmin(password.value);
+      const sendVerification = event.submitter === verifyButton;
+      if (!await cloud.unlockAdmin(password.value, sendVerification)) {
+        verifyButton.hidden = sendVerification;
+        setText('admin-error', sendVerification
+          ? 'Revisá el correo de PRIC, abrí el enlace de verificación y volvé a ingresar.'
+          : 'El correo de PRIC todavía no está verificado.');
+        return;
+      }
       if (login.open) {
         login.close();
         showEditor(true);
@@ -239,6 +252,7 @@
       setText('admin-error', rejected ? 'Contraseña incorrecta.' : 'El acceso de administrador todavía no está disponible.');
     } finally {
       loginButton.disabled = false;
+      verifyButton.disabled = false;
     }
   };
   byId('editor-close').onclick = byId('overlay').onclick = () => showEditor(false);

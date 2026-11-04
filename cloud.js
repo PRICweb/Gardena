@@ -1,5 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
-import { getAuth, inMemoryPersistence, setPersistence, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
+import { getAuth, inMemoryPersistence, sendEmailVerification, setPersistence, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
 import { getFirestore, doc, getDocFromServer, runTransaction } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
 import { firebaseConfig } from './firebase-config.js';
 
@@ -9,13 +9,18 @@ const product = doc(getFirestore(app), 'publicacion', 'ficha');
 let baseline;
 const adminEmail = 'pric.administracion@gmail.com';
 
-export async function unlockAdmin(password) {
+export async function unlockAdmin(password, sendVerification = false) {
   await setPersistence(auth, inMemoryPersistence);
   const {user} = await signInWithEmailAndPassword(auth, adminEmail, password);
   if (!user.emailVerified) {
-    await signOut(auth);
-    throw new Error('La cuenta de administrador todavía requiere verificación.');
+    try {
+      if (sendVerification) await sendEmailVerification(user);
+    } finally {
+      await signOut(auth);
+    }
+    return false;
   }
+  return true;
 }
 
 export async function loadProduct() {
