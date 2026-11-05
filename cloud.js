@@ -2,7 +2,7 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.10.0/fireba
 import { getAuth, inMemoryPersistence, sendEmailVerification, setPersistence, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
 import { getFirestore, doc, getDocFromServer, runTransaction } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
 import { getStorage, ref, uploadBytes, getDownloadURL, getMetadata } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js';
-import { firebaseConfig } from './firebase-config.js';
+import { firebaseConfig } from './firebase-config.js?v=storage';
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -34,10 +34,10 @@ export async function publishProduct(data) {
   if (baseline === undefined) throw new Error('Primero hay que cargar la ficha publicada.');
   if (auth.currentUser?.email !== adminEmail) throw new Error('Ingresá con la contraseña de administrador.');
   const published = structuredClone(data);
-  if (firebaseConfig.storageBucket) await storeImages(published);
+  await storeImages(published);
   const content = JSON.stringify(published);
   if (new TextEncoder().encode(content).length >= 900000) {
-    throw new Error('La ficha supera el límite de 900 KB. Reducí el tamaño de las imágenes.');
+    throw new Error('El contenido de la ficha supera el límite de 900 KB.');
   }
   await runTransaction(getFirestore(app), async transaction => {
     const current = await transaction.get(product);

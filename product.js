@@ -141,7 +141,7 @@
     const publish = el('button', 'Publicar cambios', 'add');
     publish.disabled = true;
     status.after(publish);
-    import('./cloud.js').then(async cloud => {
+    import('./cloud.js?v=storage').then(async cloud => {
       const published = await cloud.loadProduct();
       if (published) {
         data = {...structuredClone(initial), ...published};
@@ -237,7 +237,7 @@
     verifyButton.disabled = true;
     setText('admin-error', 'Verificando contraseña…');
     try {
-      const cloud = await import('./cloud.js');
+      const cloud = await import('./cloud.js?v=storage');
       const sendVerification = event.submitter === verifyButton;
       if (!await cloud.unlockAdmin(password.value, sendVerification)) {
         verifyButton.hidden = sendVerification;
