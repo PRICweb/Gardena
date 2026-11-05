@@ -113,24 +113,21 @@
       setText('local-status', 'El navegador no pudo guardar los cambios. Probá con imágenes más pequeñas.');
     }
   }
-  function readImage(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-  }
   function upload(input, apply) {
     input.onchange = async () => {
       if (!input.files.length) return;
+      input.disabled = true;
+      setText('local-status', 'Optimizando imágenes…');
       try {
-        const urls = await Promise.all(Array.from(input.files, readImage));
+        const {optimizeImage} = await import('./image-upload.js');
+        const urls = [];
+        for (const file of input.files) urls.push(await optimizeImage(file));
         apply(urls);
         save();
-      } catch {
-        setText('local-status', 'No se pudo leer la imagen seleccionada.');
+      } catch (error) {
+        setText('local-status', error.message || 'No se pudo leer la imagen seleccionada.');
       } finally {
+        input.disabled = false;
         input.value = '';
       }
     };
@@ -156,7 +153,13 @@
       publish.onclick = async () => {
         publish.disabled = true;
         try {
-          await cloud.publishProduct(data);
+          data = await cloud.publishProduct(data);
+          render();
+          try {
+            localStorage.setItem(key, JSON.stringify(data));
+          } catch (error) {
+            console.warn('La ficha está publicada, pero no se pudo actualizar la copia local.', error);
+          }
           setText('local-status', 'Ficha publicada.');
         } catch (error) {
           setText('local-status', error.message);
