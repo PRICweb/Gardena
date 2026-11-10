@@ -87,6 +87,7 @@
     renderCards('parts-list', data.parts);
     setImage(byId('drawing'), data.drawing);
     byId('download-pdf').disabled = !data.drawing;
+    root.dispatchEvent(new Event('product-rendered'));
     requestAnimationFrame(updateNavigation);
   }
   function renderCards(name, items) {
@@ -271,6 +272,13 @@
   };
   byId('read-more').onclick = () => { readMore = !readMore; render(); };
   byId('expand').onclick = () => { expanded = !expanded; render(); };
+  root.addEventListener('feature-select', event => {
+    const index = event.detail;
+    if (Number.isInteger(index) && index >= 0 && index < data.features.length) {
+      featureIndex = index;
+      render();
+    }
+  });
   for (const [name, step] of [['prev', -1], ['next', 1]]) {
     byId(name + '-feature').onclick = () => {
       const count = data.features.length;

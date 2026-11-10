@@ -1,0 +1,128 @@
+@font-face { font-family: "Gardena Mobile"; font-style: normal; font-weight: 400; font-display: swap; src: url("mobile-regular.ttf") format("truetype"); }
+@font-face { font-family: "Gardena Mobile"; font-style: normal; font-weight: 700 900; font-display: swap; src: url("mobile-bold.ttf") format("truetype"); }
+@media (max-width: 700px) {
+  #industrial-site-v2 { font-family: "Gardena Mobile", "Arial Narrow", Arial, sans-serif !important; }
+  #industrial-site-v2 { font-size: 16px; padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
+  #industrial-site-v2 .wrap,
+  #industrial-site-v2 .narrow,
+  #industrial-site-v2 .service .narrow { width: calc(100% - 24px); }
+  #industrial-site-v2 h1,
+  #industrial-site-v2 h2,
+  #industrial-site-v2 h3 { overflow-wrap: anywhere; }
+  #industrial-site-v2 .topbar { height: 74px; }
+  #industrial-site-v2 .topinner { flex-wrap: nowrap; padding: 0 12px; gap: 20px; }
+  #industrial-site-v2 .logo { font-size: 19px; letter-spacing: -.8px; gap: 2px; }
+  #industrial-site-v2 .logo img { width: 24px; height: 24px; }
+  #industrial-site-v2 .toplinks { display: none; }
+  #industrial-site-v2 .topbar.mobile-menu-open { height: auto; }
+  #industrial-site-v2 .mobile-menu-open .topinner { flex-wrap: wrap; padding-block: 20px; }
+  #industrial-site-v2 .mobile-menu-open .toplinks {
+    display: flex; flex-direction: column; order: 2; width: 100%; gap: 18px;
+  }
+  #industrial-site-v2 .topicons { gap: 14px; }
+  #industrial-site-v2 .mobile-menu { display: grid; place-items: center; padding: 0; width: 24px; height: 24px; border: 0; background: none; }
+  #industrial-site-v2 .mobile-menu svg { width: 22px; height: 22px; }
+  #industrial-site-v2 .crumbs { padding-block: 12px; font-size: 13px; line-height: 1.45; color: #888; }
+  #industrial-site-v2 .hero { display: block; padding-top: 36px; padding-bottom: 45px; min-height: 0; }
+  #industrial-site-v2 .hero-photo { height: 235px; }
+  #industrial-site-v2 .hero-photo img { max-width: 85%; max-height: 90%; }
+  #industrial-site-v2 .thumbs { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; gap: 10px; max-width: 285px; margin: 26px auto 0; scrollbar-width: none; }
+  #industrial-site-v2 .thumb { flex: 0 0 44px; width: 44px; height: 44px; border: 0; opacity: .35; }
+  #industrial-site-v2 .thumb.selected { opacity: 1; border: 0; }
+  #industrial-site-v2 .gallery-next { display: block; flex: 0 0 34px; width: 34px; height: 34px; border: 0; border-radius: 50%; background: #ddd; font-size: 22px; }
+  #industrial-site-v2 .hero-text { padding: 26px 0 0; }
+  #industrial-site-v2 h1 { font-size: 32px; line-height: 1.4; letter-spacing: -.5px; margin-bottom: 8px; }
+  #industrial-site-v2 .article { font-size: 15px; margin-bottom: 32px; }
+  #industrial-site-v2 .metric { grid-template-columns: 1fr 1fr; max-width: none; margin-bottom: 13px; gap: 0; }
+  #industrial-site-v2 .orange { background: #f4551b; font-size: 16px; min-height: 48px; padding: 13px 34px; }
+  #industrial-site-v2 .stickynav { border: 0; }
+  #industrial-site-v2 .navrow,
+  #industrial-site-v2 .stickynav.is-stuck .navrow {
+    display: flex; flex-wrap: nowrap; gap: 48px; width: 100%; padding-inline: 12px;
+    min-height: 54px; overflow-x: auto; scrollbar-width: none;
+  }
+  #industrial-site-v2 .navrow::-webkit-scrollbar,
+  #industrial-site-v2 .thumbs::-webkit-scrollbar { display: none; }
+  #industrial-site-v2 .navrow button:not(.orange) {
+    flex: 0 0 auto; white-space: nowrap; overflow-wrap: normal; font-size: 14px;
+    line-height: 1; min-height: 54px; height: 54px; letter-spacing: .1px;
+  }
+  #industrial-site-v2 .navrow .nav-store {
+    position: fixed; z-index: 10; left: 24px; right: 24px;
+    bottom: calc(8px + env(safe-area-inset-bottom)); width: calc(100% - 48px);
+    margin: 0; box-shadow: 0 0 0 8px white, 0 16px 0 16px white;
+  }
+  #industrial-site-v2 .description { display: block; min-height: 0; }
+  #industrial-site-v2 .desc-left { display: block; background: #eee; }
+  #industrial-site-v2 .desc-content { width: 100%; padding: 64px 24px 48px; }
+  #industrial-site-v2 .desc-content h2 { font-size: 24px; line-height: 1.5; margin-bottom: 14px; }
+  #industrial-site-v2 .desc-content p { font-size: 16px; line-height: 2; overflow-wrap: break-word; }
+  #industrial-site-v2 .textbtn { font-size: 16px; padding-block: 24px; }
+  #industrial-site-v2 .desc-right { height: auto; padding: 20px 0 0; }
+  #industrial-site-v2 .desc-right img { width: 100%; max-width: 100%; max-height: none; }
+  #industrial-site-v2 .specs { padding: 68px 0 48px; background: #595a57; }
+  #industrial-site-v2 .specs h2 { font-size: 21px; margin-bottom: 24px; }
+  #industrial-site-v2 .specs h3 { font-size: 19px; margin-top: 44px; }
+  #industrial-site-v2 .specrow { grid-template-columns: 1fr 1fr; gap: 18px; padding: 22px 0; font-size: 16px; line-height: 2; }
+  #industrial-site-v2 .features { padding: 68px 0 60px; }
+  #industrial-site-v2 .feature-kicker { font-size: 11px; margin: 0 0 8px; }
+  #industrial-site-v2 .feature-track { width: 100%; transform: none; display: block; }
+  #industrial-site-v2 #v2-feature-prev,
+  #industrial-site-v2 #v2-feature-next { display: none; }
+  #industrial-site-v2 #v2-feature-current { width: 100%; height: auto; aspect-ratio: 1.6; object-fit: cover; display: block; }
+  #industrial-site-v2 .feature-body { display: block; width: 100%; padding: 30px 24px 0; }
+  #industrial-site-v2 .feature-count,
+  #industrial-site-v2 .feature-body > .arrows { display: none; }
+  #industrial-site-v2 .feature-body h3 { font-size: 22px; margin-bottom: 14px; }
+  #industrial-site-v2 .feature-body p { font-size: 16px; line-height: 2; }
+  #industrial-site-v2 .feature-dots { display: flex; flex-wrap: wrap; justify-content: center; gap: 7px; margin-top: 28px; }
+  #industrial-site-v2 .feature-dots button { width: 12px; height: 12px; border: 2px solid #1ea7b3; border-radius: 50%; background: none; padding: 0; }
+  #industrial-site-v2 .feature-dots button[aria-pressed="true"] { background: #1ea7b3; box-shadow: inset 0 0 0 2px #eee; outline: 2px solid #1ea7b3; outline-offset: 2px; }
+  #industrial-site-v2 .accessories,
+  #industrial-site-v2 .related { padding: 68px 0 96px; }
+  #industrial-site-v2 .mobile-recent { display: block; border-top: 24px solid white; }
+  #industrial-site-v2 .leaf { display: none; }
+  #industrial-site-v2 .accessories .wrap,
+  #industrial-site-v2 .related .wrap { width: 100%; }
+  #industrial-site-v2 .accessories h2,
+  #industrial-site-v2 .related h2 { margin: 0 24px 28px; font-size: 24px; line-height: 1.5; }
+  #industrial-site-v2 .access-head { display: block; }
+  #industrial-site-v2 #v2-acc-arrows { display: none; }
+  #industrial-site-v2 .productcards { padding-inline: 32px; overflow-x: auto; gap: 24px; scroll-snap-type: x proximity; scrollbar-width: none; }
+  #industrial-site-v2 .accessories .p-card,
+  #industrial-site-v2 .related .p-card { flex: 0 0 76%; width: 76%; min-width: 0; padding: 16px; min-height: 285px; scroll-snap-align: start; }
+  #industrial-site-v2 .accessories .p-card img { height: 190px; }
+  #industrial-site-v2 .p-card h3 { font-size: 18px; margin-top: 20px; line-height: 1.4; }
+  #industrial-site-v2 .p-card p { font-size: 14px; line-height: 1.5; }
+  #industrial-site-v2 .service { padding: 68px 0 120px; }
+  #industrial-site-v2 .service h2,
+  #industrial-site-v2 .parts h2 { font-size: 24px; line-height: 1.5; margin: 10px 0 20px; }
+  #industrial-site-v2 .service .smalltop,
+  #industrial-site-v2 .smalltop { font-size: 11px; }
+  #industrial-site-v2 .service-row { display: block; font-size: 16px; }
+  #industrial-site-v2 .service-photo { width: 100%; height: auto; aspect-ratio: 1.5; background-size: 428.34% auto; background-position: 11.64% 43.4%; }
+  #industrial-site-v2 .service-row h3 { font-size: 24px; line-height: 1.4; margin: 22px 0 14px; }
+  #industrial-site-v2 .service-row p { line-height: 2; margin-block: 12px; }
+  #industrial-site-v2 .service-row a { line-height: 1.7; }
+  #industrial-site-v2 .parts { padding: 0 0 60px; }
+  #industrial-site-v2 .parts-layout { display: flex; flex-direction: column; margin-top: 42px; gap: 0; }
+  #industrial-site-v2 .drawing-box { height: auto; min-height: 280px; margin-left: 48px; overflow: hidden; }
+  #industrial-site-v2 .drawing-box img { width: 100%; max-width: 100%; max-height: none; }
+  #industrial-site-v2 .drawing-tools { position: fixed; visibility: hidden; }
+  #industrial-site-v2 .mobile-drawing-tools { display: flex; flex-direction: column; position: absolute; left: 0; gap: 0; background: #f6f6f6; }
+  #industrial-site-v2 .mobile-drawing-tools button { width: 40px; height: 38px; background: none; border: 0; font-size: 24px; }
+  #industrial-site-v2 .parts-layout { position: relative; }
+  #industrial-site-v2 .pdfbtn { text-align: left; font-size: 17px; padding: 24px 0; margin-bottom: 26px; }
+  #industrial-site-v2 .parts-scroll { height: auto; overflow: visible; border: 0; margin-inline: -12px; }
+  #industrial-site-v2 .parts-scroll .p-card { display: grid; grid-template-columns: 48px minmax(0, 1fr); align-items: center; column-gap: 20px; width: 100%; min-width: 0; min-height: 114px; padding: 26px 12px; border: 0; border-bottom: 1px solid #eee; }
+  #industrial-site-v2 .parts-scroll .p-card img { grid-row: 1 / 3; width: 40px; height: 68px; }
+  #industrial-site-v2 .parts-scroll .p-card h3 { margin: 0; font-size: 18px; line-height: 1.5; }
+  #industrial-site-v2 .parts-scroll .p-card p { grid-column: 2; margin: 0; font-size: 11px; line-height: 1.5; }
+  #industrial-site-v2 .parts-scroll .p-card p::before { content: "Part-Nr. "; }
+  #industrial-site-v2 .part-number { display: inline-block; background: #c8c8c8; padding: 0 8px; margin-right: 8px; }
+  #industrial-site-v2 .back-to-top { display: grid; place-items: center; position: fixed; right: 24px; bottom: calc(76px + env(safe-area-inset-bottom)); z-index: 9; border: 0; border-radius: 50%; width: 45px; height: 45px; color: #fff; background: #6a6b68; }
+  #industrial-site-v2 .back-to-top::before { content: ""; width: 8px; height: 8px; border: solid currentColor; border-width: 2px 2px 0 0; transform: translateY(2px) rotate(-45deg); }
+  #industrial-site-v2 .back-to-top[hidden] { display: none; }
+  #industrial-site-v2 .editor { width: 100%; }
+}
+.mobile-menu, .gallery-next, .feature-dots, .mobile-drawing-tools, .part-number, .back-to-top, .mobile-recent { display: none; }
