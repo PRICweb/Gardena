@@ -35,10 +35,6 @@
   pdf.before(pdfPosition);
   const layout = root.querySelector('.parts-layout');
   const parts = document.getElementById('v2-parts-list');
-  const recent = root.querySelector('.related').cloneNode(true);
-  recent.classList.add('mobile-recent');
-  recent.querySelector('h2').textContent = 'Visto recientemente';
-  root.querySelector('.related').after(recent);
   const tools = document.createElement('div');
   tools.className = 'mobile-drawing-tools';
   for (const [id, label, symbol] of [['in', 'Ampliar despiece', '⊕'], ['out', 'Reducir despiece', '⊖']]) {

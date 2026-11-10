@@ -2,6 +2,26 @@
   const root = document.getElementById('industrial-site-v2');
   const byId = name => document.getElementById('v2-' + name);
   const key = 'pric-ficha-prototipo';
+  const loading = document.getElementById('page-loading');
+  async function revealPage() {
+    const urls = new Set([...root.querySelectorAll('img')].map(image => image.getAttribute('src')).filter(Boolean));
+    for (const url of data.images) if (url) urls.add(url);
+    for (const node of root.querySelectorAll('.leaf, .service-photo, .related-photo, .account-icon')) {
+      const background = getComputedStyle(node).backgroundImage;
+      const match = background.match(/^url\(["']?(.*?)["']?\)$/);
+      if (match) urls.add(match[1]);
+    }
+    await Promise.all([...urls].map(url => new Promise(resolve => {
+      const image = new Image();
+      const timeout = setTimeout(resolve, 20000);
+      const done = () => { clearTimeout(timeout); resolve(); };
+      image.onload = () => image.decode().catch(() => {}).then(done);
+      image.onerror = done;
+      image.src = url;
+    })));
+    root.removeAttribute('aria-busy');
+    loading.hidden = true;
+  }
   const seed = defaults();
   const initial = {
     ...seed, metric1: seed.stats[0][0], value1: seed.stats[0][1],
@@ -149,7 +169,8 @@
         photoIndex = featureIndex = 0;
         if (editor.classList.contains('open')) editorFields();
         render();
-      }
+      } else throw new Error('No se encontró la ficha publicada.');
+      await revealPage();
       publish.disabled = false;
       publish.onclick = async () => {
         publish.disabled = true;
@@ -168,8 +189,12 @@
           publish.disabled = false;
         }
       };
-    }).catch(() => setText('local-status', 'No se pudo conectar con Firebase.'));
+    }).catch(() => {
+      loading.querySelector('p').textContent = 'No se pudo cargar la ficha. Revisá la conexión y recargá la página.';
+      loading.querySelector('button').hidden = false;
+    });
   }
+  loading.querySelector('button').onclick = () => location.reload();
   function editorFields() {
     for (const input of editor.querySelectorAll('[data-main]')) {
       const field = input.dataset.main;
@@ -272,6 +297,33 @@
   };
   byId('read-more').onclick = () => { readMore = !readMore; render(); };
   byId('expand').onclick = () => { expanded = !expanded; render(); };
+  const gallery = root.querySelector('.hero-photo');
+  gallery.tabIndex = 0;
+  gallery.setAttribute('aria-label', 'Galería del producto. Deslizá o usá las flechas para cambiar de imagen.');
+  let galleryStart;
+  function movePhoto(step) {
+    if (data.images.length < 2) return;
+    photoIndex = (photoIndex + step + data.images.length) % data.images.length;
+    render();
+  }
+  gallery.addEventListener('pointerdown', event => {
+    if (!event.isPrimary || event.button !== 0) return;
+    galleryStart = {id: event.pointerId, x: event.clientX, y: event.clientY};
+    gallery.setPointerCapture(event.pointerId);
+  });
+  gallery.addEventListener('pointerup', event => {
+    if (!galleryStart || event.pointerId !== galleryStart.id) return;
+    const dx = event.clientX - galleryStart.x;
+    const dy = event.clientY - galleryStart.y;
+    galleryStart = null;
+    if (Math.abs(dx) >= 40 && Math.abs(dx) > Math.abs(dy)) movePhoto(dx < 0 ? 1 : -1);
+  });
+  gallery.addEventListener('pointercancel', () => { galleryStart = null; });
+  gallery.addEventListener('keydown', event => {
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    event.preventDefault();
+    movePhoto(event.key === 'ArrowRight' ? 1 : -1);
+  });
   root.addEventListener('feature-select', event => {
     const index = event.detail;
     if (Number.isInteger(index) && index >= 0 && index < data.features.length) {
@@ -328,5 +380,8 @@
     updateNavigation();
     byId('acc-arrows').hidden = byId('acc-list').scrollWidth <= byId('acc-list').clientWidth;
   });
-  render();
+  if (location.protocol !== 'https:') {
+    render();
+    revealPage();
+  }
 })();
